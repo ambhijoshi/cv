@@ -21,6 +21,7 @@
             border: 1px solid #ccc;
             padding: 10px;
             background-color: #f9f9f9;
+            width: 80%;
         }
     </style>
 </head>
@@ -64,19 +65,22 @@
             if (name) {
                 const latexCode = `Hello, ${name}!`;
 
-                // Convert LaTeX to SVG using KaTeX rendering (inline render)
+                // Convert LaTeX to HTML using KaTeX rendering (inline render)
                 const equationElement = document.getElementById('equation');
-                const equationSVG = equationElement.querySelector('svg');
+                const equationHTML = equationElement.innerHTML;
 
-                // If the equation is rendered as SVG, we can save it to the PDF
-                if (equationSVG) {
-                    // Convert SVG to image data (base64)
-                    const svgData = new XMLSerializer().serializeToString(equationSVG);
-                    const svgBlob = new Blob([svgData], {type: 'image/svg+xml'});
-                    const svgUrl = URL.createObjectURL(svgBlob);
-
-                    doc.addImage(svgUrl, 'SVG', 10, 20, 180, 30);
-                    doc.save(`latex-equation-${name}.pdf`);
+                // Check if the LaTeX has been rendered
+                if (equationHTML) {
+                    // Add the rendered LaTeX (HTML) to the PDF
+                    doc.html(equationHTML, {
+                        callback: function (doc) {
+                            doc.save(`latex-equation-${name}.pdf`);
+                        },
+                        x: 10,
+                        y: 10,
+                        width: 180,
+                        windowWidth: 650
+                    });
                 } else {
                     alert('Please generate the LaTeX equation first.');
                 }
