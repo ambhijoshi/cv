@@ -3,32 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generate PDF from Name</title>
+    <title>LaTeX Name PDF Generator</title>
+    <!-- Include KaTeX for LaTeX rendering -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/katex/0.15.2/katex.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/katex/0.15.2/katex.min.js"></script>
+
+    <!-- Include jsPDF for PDF generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        #equation {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+    </style>
 </head>
 <body>
-    <h1>Enter Your Name</h1>
-    <form id="nameForm">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        <button type="submit">Generate PDF</button>
-    </form>
+
+    <h1>Generate LaTeX Equation with Your Name</h1>
+    
+    <!-- Input for the user's name -->
+    <label for="name">Enter Your Name: </label>
+    <input type="text" id="name" placeholder="Enter your name" required>
+    
+    <button onclick="generateEquation()">Generate Equation</button>
+    
+    <!-- Area where the LaTeX equation will be rendered -->
+    <div id="equation"></div>
+    
+    <br>
+    <!-- Button to download the equation as a PDF -->
+    <button onclick="downloadPDF()">Download as PDF</button>
 
     <script>
-        const { jsPDF } = window.jspdf;
-
-        document.getElementById('nameForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        // Function to generate LaTeX code with the entered name
+        function generateEquation() {
             const name = document.getElementById('name').value;
+            
+            if (name) {
+                const latexCode = `\documentclass[letterpaper,10pt]{article}
 
-            // Generate PDF using jsPDF
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\input{glyphtounicode}
+
+% Font options
+\usepackage[sfdefault]{roboto}  % Sans-serif font
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Section formatting
+\titleformat{\section}{\Large\bfseries\scshape\raggedright}{}{0em}{}[\titlerule]
+
+% Ensure PDF is machine readable
+\pdfgentounicode=1
+
+% Custom commands
+\newcommand{\resumeItem}[1]{\item\small{#1}}
+\newcommand{\resumeSubheading}[4]{
+\vspace{-1pt}\item
+  \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+    \textbf{#1} & #2 \\
+    \textit{#3} & \textit{#4} \\
+  \end{tabular*}\vspace{-7pt}
+}
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\newcommand{\resumeSubHeadingList}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+
+\begin{document}
+
+\begin{center}
+
+  \textbf{\Huge ${name}} \\ 
+\end{center}
+
+\section*{Summary}
+To obtain a Junior Software Developer position that allows me to enhance my technical skills, problem-solving abilities, and passion for innovation while contributing to the creation of high-quality software solutions. As a BTECH student, I have acquired practical experience in programming languages like Java and Python, along with web development technologies such as HTML, CSS, and JavaScript. My long-term aspiration is to evolve into a proficient software engineer capable of delivering innovative solutions to real-world challenges and making a meaningful difference in society.
+
+\section{Education}
+\resumeSubHeadingList
+  \resumeSubheading
+      {Graphic Era Deemed to be University }{Dehradun,Uttarakhand,India}
+      {Bachelor of Technology }{Aug 2024 -- May 2028}
+      
+      {(Computer Science)}
+
+     
+  \resumeSubheading
+      {Bishop Westcott Boy’s School}{Ranchi,Jharkhand,India}
+      {Intermediate}{Apr 2021 -- Mar 2023}
+
+
+       {Percentage:- 71  }
+\resumeSubHeadingListEnd
+
+
+
+\section{Technical Skills}
+\resumeSubHeadingList
+  \resumeItem{\textbf{Programming Languages}: C, Java, Python }
+  \resumeItem{\textbf{Web Development Technologies}: HTML }
+  \resumeItem{\textbf{Libraries \& Tools}: NumPy, Pandas, Scikit-learn }
+\resumeSubHeadingListEnd
+
+\section{Projects}
+\resumeSubHeadingList
+  \resumeSubheading
+{Sentiment Analysis of Customer Reviews}{Feb 2024 -- May 2024}
+{Natural Language Processing Project}{Python, Pandas, NLTK, Scikit-learn}
+\resumeSubHeadingList
+\resumeItem{\textbullet\ Compared various NLP techniques and models to analyze customer sentiments accurately.}
+\resumeItem{\textbullet\ Implemented Naive Bayes, Logistic Regression, SVM, and Random Forest for sentiment classification.}
+\resumeSubHeadingListEnd
+  \resumeSubheading
+      {Hospital Management System}{Aug 2022 -- Dec 2022} 
+      {Web Development Project}{HTML, CSS, JavaScript, Node.js}
+      \resumeSubHeadingList
+          \resumeItem{\textbullet\ Appointment registering with the Doctors}
+          \resumeItem{\textbullet\ We can see the current Number going in Hospital}
+      \resumeSubHeadingListEnd
+\resumeSubHeadingListEnd
+
+
+
+
+\section{Certifications}
+\resumeSubHeadingList
+  \resumeItem{\textbullet\ Introduction to Programming - Linkedin}
+  \resumeItem{\textbullet\ Python Programming - Linkedin}
+\resumeSubHeadingListEnd
+  
+\resumeSubHeadingListEnd
+\end{document}`; // Custom LaTeX expression with the name
+                // Render the LaTeX equation using KaTeX
+                katex.render(latexCode, document.getElementById('equation'));
+            } else {
+                alert('Please enter a name.');
+            }
+        }
+
+        // Function to generate a PDF with the rendered LaTeX equation
+        function downloadPDF() {
+            const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            doc.setFontSize(16);
-            doc.text(`Hello, my name is ${name}.`, 20, 30);
 
-            // Save the generated PDF
-            doc.save('generated.pdf');
-        });
+            const name = document.getElementById('name').value;
+            if (name) {
+                const latexCode = `Hello, ${name}!`;
+
+                // Convert LaTeX to SVG using KaTeX rendering (inline render)
+                const equationElement = document.getElementById('equation');
+                const equationSVG = equationElement.querySelector('svg');
+
+                // If the equation is rendered as SVG, we can save it to the PDF
+                if (equationSVG) {
+                    // Convert SVG to image data (base64)
+                    const svgData = new XMLSerializer().serializeToString(equationSVG);
+                    const svgBlob = new Blob([svgData], {type: 'image/svg+xml'});
+                    const svgUrl = URL.createObjectURL(svgBlob);
+
+                    doc.addImage(svgUrl, 'SVG', 10, 20, 180, 30);
+                    doc.save(`latex-equation-${name}.pdf`);
+                } else {
+                    alert('Please generate the LaTeX equation first.');
+                }
+            } else {
+                alert('Please enter a name.');
+            }
+        }
     </script>
+
 </body>
 </html>
